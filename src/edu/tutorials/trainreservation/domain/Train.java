@@ -113,4 +113,13 @@ public class Train {
         }
         return -1;
     }
+
+    public City getCity(String cityName) {
+        for (City city : cities) {
+            if (city.getName().equals(cityName)) {
+                return city;
+            }
+        }
+        return null;
+    }
 }

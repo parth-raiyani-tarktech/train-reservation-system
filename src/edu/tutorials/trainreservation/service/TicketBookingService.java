@@ -28,7 +28,7 @@ public class TicketBookingService {
 
         long pnr = generatePNR();
 
-        Ticket ticket = new Ticket(pnr, selectedTrain.getTrainNumber(), selectedTrain.getSource(), selectedTrain.getDestination(), travelDate, totalFare, bookedSeats);
+        Ticket ticket = new Ticket(pnr, selectedTrain.getTrainNumber(), selectedTrain.getCity(sourceCity), selectedTrain.getCity(destinationCity), travelDate, totalFare, bookedSeats);
         bookedTickets.add(ticket);
 
         return ticket;
