@@ -28,4 +28,32 @@ public class Ticket {
         return String.format(String.format("PNR: %d, Train: %s, Travel Date: %s, Total Fare: %.2f, Booked Seats: %s", pnr, trainNumber, travelDate.toString(), totalFare, Utils.toCommaSeparatedSeatNo(bookedSeats)));
     }
 
+    public String getTrainNumber() {
+        return trainNumber;
+    }
+
+    public City getFrom() {
+        return from;
+    }
+
+    public City getTo() {
+        return to;
+    }
+
+    public LocalDate getTravelDate() {
+        return travelDate;
+    }
+
+    public double getTotalFare() {
+        return totalFare;
+    }
+
+    public List<Seat> getBookedSeats() {
+        return bookedSeats;
+    }
+
+    public long getPnr() {
+        return pnr;
+    }
+
 }
