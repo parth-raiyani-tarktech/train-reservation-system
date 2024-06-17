@@ -8,14 +8,12 @@ import java.util.List;
 
 public class Train {
     private final String trainNo;
-    private final City source;
-    private final City destination;
+    private final List<City> cities;
     private final List<Coach> coaches;
 
-    public Train(String trainNo, City source, City destination, List<Coach> coaches) {
+    public Train(String trainNo, List<City> cities, List<Coach> coaches) {
         this.trainNo = trainNo;
-        this.source = source;
-        this.destination = destination;
+        this.cities = cities;
         this.coaches = coaches;
     }
 
@@ -28,16 +26,29 @@ public class Train {
     }
 
     public boolean hasRoute(String sourceCity, String destinationCity) {
-        return this.source.getName().equals(sourceCity)
-                && this.destination.getName().equals(destinationCity);
+        int sourceIndex = -1;
+        int destinationIndex = -1;
+        for (int i = 0; i < cities.size(); i++) {
+            City city = cities.get(i);
+            if (sourceIndex == -1 && city.getName().equals(sourceCity)) {
+                sourceIndex = i;
+            }
+            if (destinationIndex == -1 && city.getName().equals(destinationCity)) {
+                destinationIndex = i;
+            }
+            if (sourceIndex != -1 && destinationIndex != -1) {
+                break;
+            }
+        }
+        return sourceIndex != -1 && destinationIndex != -1 && sourceIndex < destinationIndex;
     }
 
     public City getSource() {
-        return source;
+        return cities.get(0);
     }
 
     public City getDestination() {
-        return destination;
+        return cities.get(cities.size() - 1);
     }
 
     public boolean hasCoachType(CoachType coachType) {
@@ -85,7 +96,18 @@ public class Train {
         return availableSeats;
     }
 
-    public int getTotalDistance() {
-        return destination.getDistance() - source.getDistance();
+    public int calculateDistance(String sourceCity, String destinationCity) {
+        int sourceDistance = getCity(sourceCity).getDistance();
+        int destinationDistance = getCity(destinationCity).getDistance();
+        return destinationDistance - sourceDistance;
+    }
+
+    public City getCity(String cityName) {
+        for (City city : cities) {
+            if (city.getName().equals(cityName)) {
+                return city;
+            }
+        }
+        throw new IllegalArgumentException("City not found: " + cityName);
     }
 }

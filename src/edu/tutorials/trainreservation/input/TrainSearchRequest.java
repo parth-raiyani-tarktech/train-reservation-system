@@ -7,7 +7,7 @@ import java.time.LocalDate;
 public class TrainSearchRequest {
     private final String sourceCity;
     private final String destinationCity;
-    private CoachType coachType;
+    private final CoachType coachType;
     private final LocalDate travelDate;
     private final int passengerCount;
 

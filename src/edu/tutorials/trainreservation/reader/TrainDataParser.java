@@ -16,14 +16,20 @@ public class TrainDataParser {
     public static Train parse(String trainDetailsInput, String coachDetailsInput) {
         String[] trainDetails = trainDetailsInput.split(SPACE);
         String trainNo = trainDetails[0];
-        City source = parseCityDetails(trainDetails[1]);
-        City destination = parseCityDetails(trainDetails[2]);
-
+        List<City> cities = buildCities(trainDetails);
         String[] coachDetails = coachDetailsInput.split(SPACE);
         coachDetails = Arrays.copyOfRange(coachDetails, 1, coachDetails.length);
         List<Coach> coaches = buildCoaches(coachDetails);
 
-        return new Train(trainNo, source, destination, coaches);
+        return new Train(trainNo, cities, coaches);
+    }
+
+    private static List<City> buildCities(String[] trainDetails) {
+        List<City> cities = new ArrayList<>();
+        for (int i = 1; i < trainDetails.length; i++) {
+            cities.add(parseCityDetails(trainDetails[i]));
+        }
+        return cities;
     }
 
     private static City parseCityDetails(String cityDetails) {
