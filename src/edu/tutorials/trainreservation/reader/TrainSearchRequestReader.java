@@ -22,12 +22,12 @@ public class TrainSearchRequestReader {
     }
 
     private static CoachType toCoachType(String coachType) {
-        switch (coachType) {
-            case "SL": return CoachType.SLEEPER;
-            case "3A": return CoachType.TIER_3_AC;
-            case "2A": return CoachType.TIER_2_AC;
-            case "1A": return CoachType.TIER_1_AC;
-            default: throw new IllegalArgumentException("Invalid Coach Type: " + coachType);
-        }
+        return switch (coachType) {
+            case "SL" -> CoachType.SLEEPER;
+            case "3A" -> CoachType.TIER_3_AC;
+            case "2A" -> CoachType.TIER_2_AC;
+            case "1A" -> CoachType.TIER_1_AC;
+            default -> throw new IllegalArgumentException("Invalid Coach Type: " + coachType);
+        };
     }
 }

@@ -1,12 +1,11 @@
 package edu.tutorials.trainreservation.service;
 
-import edu.tutorials.trainreservation.domain.CoachType;
 import edu.tutorials.trainreservation.domain.Seat;
 import edu.tutorials.trainreservation.domain.Ticket;
 import edu.tutorials.trainreservation.domain.Train;
+import edu.tutorials.trainreservation.input.TrainSearchRequest;
 import edu.tutorials.trainreservation.utils.Utils;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,17 +19,13 @@ public class TicketBookingService {
         bookedTickets = new ArrayList<>();
     }
 
-    public Ticket bookTicket(String trainNumber, CoachType coachType, LocalDate travelDate, int passengerCount, String sourceCity, String destinationCity) {
+    public Ticket bookTicket(String trainNumber, TrainSearchRequest trainSearchRequest) {
         Train selectedTrain = trainService.getTrainByNumber(trainNumber);
-
-        List<Seat> bookedSeats = selectedTrain.reserveSeats(coachType, travelDate, passengerCount);
-        double totalFare = coachType.calculateFare(selectedTrain.calculateDistance(sourceCity, destinationCity), passengerCount);
-
+        List<Seat> bookedSeats = selectedTrain.reserveSeats(trainSearchRequest.getCoachType(), trainSearchRequest.getTravelDate(), trainSearchRequest.getPassengerCount());
+        double totalFare = trainSearchRequest.getCoachType().calculateFare(selectedTrain.calculateDistance(trainSearchRequest.getSourceCity(), trainSearchRequest.getDestinationCity()), trainSearchRequest.getPassengerCount());
         long pnr = generatePNR();
-
-        Ticket ticket = new Ticket(pnr, selectedTrain.getTrainNumber(), selectedTrain.getCity(sourceCity), selectedTrain.getCity(destinationCity), travelDate, totalFare, bookedSeats);
+        Ticket ticket = new Ticket(pnr, selectedTrain.getTrainNumber(), selectedTrain.getCity(trainSearchRequest.getSourceCity()), selectedTrain.getCity(trainSearchRequest.getDestinationCity()), trainSearchRequest.getTravelDate(), totalFare, bookedSeats);
         bookedTickets.add(ticket);
-
         return ticket;
     }
 

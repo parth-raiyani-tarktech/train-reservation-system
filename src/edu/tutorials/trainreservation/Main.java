@@ -32,31 +32,43 @@ public class Main {
             }
 
             if(input.matches("\\d+")) { // if input is a PNR number
-                long pnr = Long.parseLong(input);
-                Ticket ticket = ticketBookingService.getBookingDetails(pnr);
-                if(ticket != null) {
-                    System.out.println(ticket.getTrainNumber() + " " + ticket.getFrom() + " " + ticket.getTo() + " " + ticket.getTravelDate() + " " + ticket.getTotalFare() + " " + Utils.toCommaSeparatedSeatNo(ticket.getBookedSeats()));
-                } else {
-                    System.out.println("Invalid PNR");
-                }
+                processPNR(input, ticketBookingService);
             } else if(input.equalsIgnoreCase("REPORT")) {
                 ticketBookingService.generateAndPrintReport();
             } else { // if input is a train search request
-                TrainSearchRequest trainSearchRequest = TrainSearchRequestReader.read(input);
-                System.out.println(trainSearchRequest + "\n");
-
-                List<Train> trainsForRoute = trainService.findTrains(trainSearchRequest);
-                displayTrainNo(trainsForRoute);
-
-                if(!trainsForRoute.isEmpty()) {
-                    String trainNo = DataReader.readTrainNoToBookTicket();
-                    Ticket bookedTicket = ticketBookingService.bookTicket(trainNo, trainSearchRequest.getCoachType(), trainSearchRequest.getTravelDate(), trainSearchRequest.getPassengerCount(), trainSearchRequest.getSourceCity(), trainSearchRequest.getDestinationCity());
-                    System.out.println(bookedTicket.getPnr() + " " + bookedTicket.getTotalFare() + " " + Utils.toCommaSeparatedSeatNo(bookedTicket.getBookedSeats()));
-                }
+                processTrainSearchRequest(input, trainService, ticketBookingService);
             }
         }
 
         displayTickets(ticketBookingService.getBookedTickets());
+    }
+
+    private static void processTrainSearchRequest(String input, TrainService trainService, TicketBookingService ticketBookingService) {
+        TrainSearchRequest trainSearchRequest = TrainSearchRequestReader.read(input);
+        System.out.println(trainSearchRequest + "\n");
+
+        List<Train> trainsForRoute = trainService.findTrains(trainSearchRequest);
+        displayTrainNo(trainsForRoute);
+
+        if(!trainsForRoute.isEmpty()) {
+            String trainNo = DataReader.readTrainNoToBookTicket();
+            Ticket bookedTicket = ticketBookingService.bookTicket(trainNo, trainSearchRequest);
+            System.out.println(bookedTicket.getPnr() + " " + bookedTicket.getTotalFare() + " " + Utils.toCommaSeparatedSeatNo(bookedTicket.getBookedSeats()));
+        }
+    }
+
+    private static void processPNR(String input, TicketBookingService ticketBookingService){
+        long pnr = Long.parseLong(input);
+        Ticket ticket = ticketBookingService.getBookingDetails(pnr);
+        displayTicketInfo(ticket);
+    }
+
+    private static void displayTicketInfo(Ticket ticket){
+        if(ticket != null) {
+            System.out.println(ticket.getTrainNumber() + " " + ticket.getFrom() + " " + ticket.getTo() + " " + ticket.getTravelDate() + " " + ticket.getTotalFare() + " " + Utils.toCommaSeparatedSeatNo(ticket.getBookedSeats()));
+        } else {
+            System.out.println("Invalid PNR");
+        }
     }
 
     private static void displayTickets(List<Ticket> bookedTickets) {

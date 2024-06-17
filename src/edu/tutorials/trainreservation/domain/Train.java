@@ -28,21 +28,18 @@ public class Train {
     public boolean hasRoute(String sourceCity, String destinationCity) {
         int sourceIndex = -1;
         int destinationIndex = -1;
-
-        int i = 0;
-        while(sourceIndex == -1 || destinationIndex == -1) {
-            if (cities.get(i).getName().equals(sourceCity)) {
+        for (int i = 0; i < cities.size(); i++) {
+            City city = cities.get(i);
+            if (sourceIndex == -1 && city.getName().equals(sourceCity)) {
                 sourceIndex = i;
             }
-            else if (cities.get(i).getName().equals(destinationCity)) {
+            if (destinationIndex == -1 && city.getName().equals(destinationCity)) {
                 destinationIndex = i;
             }
-            if(i == cities.size() - 1) {
+            if (sourceIndex != -1 && destinationIndex != -1) {
                 break;
             }
-            i++;
         }
-
         return sourceIndex != -1 && destinationIndex != -1 && sourceIndex < destinationIndex;
     }
 
@@ -100,18 +97,9 @@ public class Train {
     }
 
     public int calculateDistance(String sourceCity, String destinationCity) {
-        int sourceDistance = getCityDistance(sourceCity);
-        int destinationDistance = getCityDistance(destinationCity);
+        int sourceDistance = getCity(sourceCity).getDistance();
+        int destinationDistance = getCity(destinationCity).getDistance();
         return destinationDistance - sourceDistance;
-    }
-
-    public int getCityDistance(String cityName) {
-        for (City city : cities) {
-            if (city.getName().equals(cityName)) {
-                return city.getDistance();
-            }
-        }
-        return -1;
     }
 
     public City getCity(String cityName) {
@@ -120,6 +108,6 @@ public class Train {
                 return city;
             }
         }
-        return null;
+        throw new IllegalArgumentException("City not found: " + cityName);
     }
 }
