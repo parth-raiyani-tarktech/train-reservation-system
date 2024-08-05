@@ -19,7 +19,7 @@ You will be given a list of trains and coach configurations in the below format.
 3. For each train, the first and last station is mentioned. Along with the station, the distance is mentioned in km.  
    For example, train **17726** travels from Rajkot to Mumbai. **Mumbai is 750 km** away from Rajkot. However, **Rajkot is 0 km** away from itself. This distance will be used while calculating the fare, as explained below.
 4. The second line indicates the list of coaches and seats within each coach.  
-   For example, **17226 S1-72 S2-72 B1-72 A1-48 H1-24**
+   For example, **17726 S1-72 S2-72 B1-72 A1-48 H1-24**
 
 This train has 5 coaches, S1, S2, B1, A1 and H1. In S1, S2, and B1, each coach has 72 seats/berths. In A1, there are 48 seats; in H1, there are 24 seats.
 
@@ -97,7 +97,7 @@ List of trains in below format,
 ```
 3
 17726 Rajkot-0 Ahmedabad-200 Vadodara-300 Surat-500 Mumbai-750
-17226 S1-72 S2-72 B1-72 A1-48 H1-24
+17726 S1-72 S2-72 B1-72 A1-48 H1-24
 37392 Ahmedabad-0 Anand-50 Vadodara-100 Bharuch-200 Surat-300
 37392 S1-15 S2-20 S3-50 B1-36 B2-48
 29772 Vadodara-0 Dahod-150 Indore-350
