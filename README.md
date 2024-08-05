@@ -9,7 +9,7 @@ You will be given a list of trains and coach configurations in the below format.
 ```
 2
 17726 Rajkot-0 Mumbai-750
-17226 S1-72 S2-72 B1-72 A1-48 H1-24
+17726 S1-72 S2-72 B1-72 A1-48 H1-24
 37392 Ahmedabad-0 Surat-300
 37392 S1-15 S2-20 S3-50 B1-36 B2-48
 ```
