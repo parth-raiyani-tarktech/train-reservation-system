@@ -4,7 +4,6 @@ import edu.tutorials.trainreservation.domain.CoachType;
 import edu.tutorials.trainreservation.domain.Seat;
 import edu.tutorials.trainreservation.domain.Ticket;
 import edu.tutorials.trainreservation.domain.Train;
-// import edu.tutorials.trainreservation.service.ReportService;
 import edu.tutorials.trainreservation.utils.Utils;
 
 import java.time.LocalDate;
@@ -32,7 +31,7 @@ public class TicketBookingService {
 
         Ticket ticket = new Ticket(pnr, selectedTrain.getTrainNumber(), selectedTrain.getSource(), selectedTrain.getDestination(), travelDate, totalFare, bookedSeats);
         bookedTickets.add(ticket);
-        // System.out.println(new ReportService(pnr, selectedTrain.getTrainNumber(), totalFare, selectedTrain.getSource().getName(), selectedTrain.getDestination().getName(), travelDate.toString(), Utils.toCommaSeparatedSeatNo(bookedSeats)));
+        
         report.put(pnr, new ReportService(pnr, selectedTrain.getTrainNumber(), totalFare, selectedTrain.getSource().getName(), selectedTrain.getDestination().getName(), travelDate.toString(), Utils.toCommaSeparatedSeatNo(bookedSeats)));
 
         return ticket;

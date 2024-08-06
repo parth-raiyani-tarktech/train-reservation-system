@@ -35,7 +35,6 @@ public class Main {
             if(trainSearchRequest == null){
                 continue;
             }
-            // System.out.println(trainSearchRequest + "\n");
 
             List<Train> trainsForRoute = trainService.findTrains(trainSearchRequest);
             displayTrainNo(trainsForRoute);
