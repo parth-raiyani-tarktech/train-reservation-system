@@ -41,7 +41,7 @@ Next, the user will enter booking requests, in the following format,
 Input: Rajkot Mumbai 2024-06-15 SL 6
 ```
 
-**The user wants to book tickets from Rajkot to Mumbai for the date 15th March 2023. SL indicates Sleeper class. Total passengers: 6**
+**The user wants to book tickets from Rajkot to Mumbai for the date 15th June 2024. SL indicates Sleeper class. Total passengers: 6**
 
 The following symbols represent different class/coach types (in booking request), i.e. instead
 
@@ -117,18 +117,21 @@ Surat-500 represents that the Surat is 500 KM away from Rajkot
 Mumbai-750 represents that the Mumbai is 750 KM away from Rajkot
 
 **Booking Requests:**
+
 ```
 Input: Ahmedabad Surat 2023-03-15 SL 3
 Output: 17726 37392
 ```
 
 There are two eligible trains and so display train numbers of both.
+
 ```
 Next Input: 17726
 Output: 100000001 900
 ```
 
 User has selected 17726 (out of both options) and so the ticket is booked in this train. Total distance is 300 KM and number of passengers are 3, and so the total fair is 900
+
 ```
 Input: Ahmedabad Surat 2023-03-15 1A 2
 Output: 17726
@@ -137,12 +140,14 @@ Output: 17726
 **Note:**
 
 1A (First Class AC) is only available in 17726 and so only one train number is displayed. If there are no seats available in any of the eligible trains, then display message “No Seats Available”
+
 ```
 Next Input: 17726
 Output: 100000002 2400
 ```
 
 **Retrieve booking details using PNR**
+
 ```
 Input: 100000001
 Output: 17726 Ahmedabad Surat 2023-03-15 900 S1-1 S1-2 S1-3
@@ -172,6 +177,7 @@ Output: 29772 Vadodara Indore 2023-03-15 700 S1-1 S1-2
 ```
 
 **Generate Report**
+
 ```
 Input: REPORT
 
