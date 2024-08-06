@@ -10,7 +10,7 @@ public class TrainSearchRequest {
     private CoachType coachType;
     private final LocalDate travelDate;
     private final int passengerCount;
-
+    
     public TrainSearchRequest(String sourceCity, String destinationCity, LocalDate travelDate, CoachType coachType, int noOfPassengers) {
 
         this.sourceCity = sourceCity;
