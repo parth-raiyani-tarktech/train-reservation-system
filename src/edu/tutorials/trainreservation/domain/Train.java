@@ -8,14 +8,13 @@ import java.util.List;
 
 public class Train {
     private final String trainNo;
-    private final City source;
-    private final City destination;
+    private final List<City> locations;
     private final List<Coach> coaches;
+    private City tempSource, tempDest;
 
-    public Train(String trainNo, City source, City destination, List<Coach> coaches) {
+    public Train(String trainNo, List<City> locations, List<Coach> coaches) {
         this.trainNo = trainNo;
-        this.source = source;
-        this.destination = destination;
+        this.locations = locations;
         this.coaches = coaches;
     }
 
@@ -28,16 +27,26 @@ public class Train {
     }
 
     public boolean hasRoute(String sourceCity, String destinationCity) {
-        return this.source.getName().equals(sourceCity)
-                && this.destination.getName().equals(destinationCity);
+        int sourceOrDestination = 0; //source
+        for(int i=0;i<locations.size();i++){
+            if(sourceOrDestination == 0 && locations.get(i).getName().equals(sourceCity)){
+                tempSource = new City(sourceCity, locations.get(i).getDistance());
+                sourceOrDestination++;
+            }
+            else if( sourceOrDestination == 1 && locations.get(i).getName().equals(destinationCity)){
+                tempDest = new City(destinationCity, locations.get(i).getDistance());
+                return true;
+            }
+        }
+        return false;
     }
 
     public City getSource() {
-        return source;
+        return tempSource;
     }
 
     public City getDestination() {
-        return destination;
+        return tempDest;
     }
 
     public boolean hasCoachType(CoachType coachType) {
@@ -85,7 +94,18 @@ public class Train {
         return availableSeats;
     }
 
-    public int getTotalDistance() {
-        return destination.getDistance() - source.getDistance();
+    public int getTotalDistance(City sourceCity, City destinationCity) {
+        int sourceOrDestination = 0; //source
+        int dist = 0;
+        for(int i=0;i<locations.size();i++){
+            if(sourceOrDestination == 0 && locations.get(i).getName().equals(sourceCity.getName())){
+                sourceOrDestination++;
+                dist = locations.get(i).getDistance();
+            }
+            else if( sourceOrDestination == 1 && locations.get(i).getName().equals(destinationCity.getName())){
+                return locations.get(i).getDistance()-dist;
+            }
+        }
+        return 0;
     }
 }

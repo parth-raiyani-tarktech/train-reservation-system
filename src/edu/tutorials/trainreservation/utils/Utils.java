@@ -13,7 +13,7 @@ public class Utils {
     public static String toCommaSeparatedSeatNo(List<Seat> bookedSeats) {
         StringBuilder result = new StringBuilder();
         for (Seat seat : bookedSeats) {
-            if (result.isEmpty()) {
+            if (result.length() == 0) {
                 result.append(seat);
             } else {
                 result.append(", ").append(seat);

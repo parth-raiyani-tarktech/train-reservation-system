@@ -16,14 +16,14 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         List<Train> trains = DataReader.readTrainData();
-        displayTrainDetails(trains);
+        // displayTrainDetails(trains);
 
         TrainService trainService = new TrainService(trains);
         TicketBookingService ticketBookingService = new TicketBookingService(trainService);
 
         Scanner sc = new Scanner(System.in);
         while(true) {
-            System.out.println("\nEnter train search request (type 'exit' to quit)");
+            System.out.print("\nInput: ");
 
             String input = sc.nextLine();
             if(input.equals("exit")) {
@@ -32,7 +32,9 @@ public class Main {
 
             // Search Trains
             TrainSearchRequest trainSearchRequest = TrainSearchRequestReader.read(input);
-            System.out.println(trainSearchRequest + "\n");
+            if(trainSearchRequest == null){
+                continue;
+            }
 
             List<Train> trainsForRoute = trainService.findTrains(trainSearchRequest);
             displayTrainNo(trainsForRoute);
@@ -41,9 +43,10 @@ public class Main {
                 // Select Train Number
                 String trainNo = DataReader.readTrainNoToBookTicket();
                 Ticket bookedTicket = ticketBookingService.bookTicket(trainNo, trainSearchRequest.getCoachType(), trainSearchRequest.getTravelDate(), trainSearchRequest.getPassengerCount());
-                System.out.println("Ticket booked successfully: " + bookedTicket);
+                System.out.println("Ticket booked successfully: \n" + bookedTicket);
             }
         }
+        sc.close();
 
         displayTickets(ticketBookingService.getBookedTickets());
     }
